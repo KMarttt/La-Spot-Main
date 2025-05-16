@@ -1,18 +1,23 @@
 SET SQL_SAFE_UPDATES = 0;
 
-DROP TABLE profile_pic;
-DROP TABLE user_password_reset;
-DROP TABLE admin_password_reset;
+-- To  create the SQL tables, run the whole code (click the lightning icon at the top left)
+-- To reset, the DB uncomment the drop table and run the code
+ 
 
-DROP TABLE parking;
-DROP TABLE vehicle;
+-- DROP TABLE user_profile_pic;
+-- DROP TABLE admin_profile_pic;
+-- DROP TABLE user_password_reset;
+-- DROP TABLE admin_password_reset;
 
-DROP TABLE user_information;
+-- DROP TABLE parking;
+-- DROP TABLE vehicle;
 
-DROP TABLE admin_information;
-DROP TABLE admin_codes;
+-- DROP TABLE user_information;
 
-DROP TABLE lot;
+-- DROP TABLE admin_information;
+-- DROP TABLE admin_codes;
+
+-- DROP TABLE lot;
 
 
 -- Will create the table for the lot
@@ -286,11 +291,16 @@ UPDATE parking
 SET vacated_at = CURRENT_TIMESTAMP, duration = TIMESTAMPDIFF(MINUTE, occupied_at, CURRENT_TIMESTAMP), admin_out_id = 1
 WHERE user_id = 123456789;
 
--- Profile Pic and OTK Key 
-CREATE TABLE profile_pic (
-	email VARCHAR(255) NOT NULL,
+CREATE TABLE user_profile_pic (
+	ID VARCHAR(20) UNIQUE NOT NULL,
     prof_pic LONGBLOB,
-    UNIQUE KEY email (email)
+    FOREIGN KEY (ID) REFERENCES user_information(user_id)
+);
+
+CREATE TABLE admin_profile_pic (
+	ID INT UNIQUE NOT NULL,
+    prof_pic LONGBLOB,
+    FOREIGN KEY (ID) REFERENCES admin_information(admin_id)
 );
 
 CREATE TABLE user_password_reset (
@@ -306,6 +316,7 @@ CREATE TABLE admin_password_reset (
     expires_at DATETIME NOT NULL,
     FOREIGN KEY (email) REFERENCES admin_information(email)
 );
+
 
 
 
