@@ -110,7 +110,7 @@ export const TableBodyParkingAdmin = ({
                 
                 <td>{lotID}</td>
                 <td>
-                    <form>
+                    {/* <form> */}
                     <input type = "text" id = "carPlate"
                         value = {carPlate}
                         onChange={(e) => setCarPlate(e.target.value)}
@@ -119,7 +119,7 @@ export const TableBodyParkingAdmin = ({
                         onKeyDown={handleKeyDown}
                         onBlur={() => {inputRef.current.placeholder = ""}}
                     />
-                    </form>
+                    {/* </form> */}
                 </td>
                 <td>{userID ? userID : ""}</td>
                 <td>{accountType ? accountType : ""}</td>
