@@ -20,3 +20,5 @@ On the second terminal:
 - npm install
 - npm run dev
 - Then follow the link
+
+Note: Use the Admin Code from the database to create your very own admin account
