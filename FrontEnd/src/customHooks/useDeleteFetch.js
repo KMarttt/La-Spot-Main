@@ -31,7 +31,6 @@ export function  useDeleteFetch() {
                 })
                 .then(res => res.json())
                 .then( async data => {
-                    console.log("Updated token: " + data.accessToken)
                     setAuth({
                         accessToken: data.accessToken,
                         ID: data.ID,
@@ -52,7 +51,6 @@ export function  useDeleteFetch() {
 
             if(!res.ok){
                 const responseData = await res.json();
-                console.log("Error message: " + responseData.message)
                 throw new Error (responseData.message || "An unknown error has occured")     
             }
 

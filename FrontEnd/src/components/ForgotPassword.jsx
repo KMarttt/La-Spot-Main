@@ -38,8 +38,6 @@ const ForgotPassword = ({ goBackToLogin }) => {
     setIsPending(true);
 
     try {
-      console.log("triggering email validation");
-      console.log("forgot password account type", accountType)
       const response = await fetch("http://localhost:8080/forgot-password", {
         method: "POST",
         headers: {
@@ -49,7 +47,6 @@ const ForgotPassword = ({ goBackToLogin }) => {
       })
 
       const data = await response.json();
-      console.log(data);
 
       if (response.ok) {
         newErrors["email"] = false;

@@ -14,17 +14,13 @@ export function checkExistingEmail(email, ID, user) {
                 reject(error);
             } else {
                 let emailError = {}
-                console.log("checking data . userId", data[0]?.account_id, "id", ID)
                 
                 if (data[0]?.account_id == ID) {
                     resolve(emailError.exist = false);  
                 } else {
-                    console.log("email data checking plez",data)
                     if (Object.keys(data).length !== 0) {
-                    console.log("email error exists")
                     resolve(emailError.exist = true);
                 } else {
-                    console.log("email error does not exist")
                     resolve(emailError.exist = false);
                 }
                 }

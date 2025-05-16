@@ -24,7 +24,6 @@ export function UserParkingView() {
     }, [])
 
   if (gettingZones || searching ) return <p>Loading...</p>
-    console.log("this is the assgined lot", )
 
   return (
     <>

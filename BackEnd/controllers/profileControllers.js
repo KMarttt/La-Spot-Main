@@ -29,8 +29,7 @@ export const userProfileData = (req, res) => {
         if (err) {
             return res.status(500).json({isValid: false, message: "Database query failed"})
         }
-        
-        console.log("this is the user profile query", profileData)
+
         const picQuery = "SELECT prof_pic FROM user_profile_pic WHERE ID = ?";
         connection.query(picQuery, [ID], (err, picResult) => {
             if (err) return res.status(500).json({ message: "Profile picture fetch failed", err });
@@ -40,7 +39,6 @@ export const userProfileData = (req, res) => {
                 profileImageBase64 = `data:image/jpeg;base64,${picResult[0].prof_pic.toString("base64")}`;
             }
 
-            console.log(profileData);
             return res.status(200).json({
                 ...profileData[0],
                 profile_image: profileImageBase64
@@ -51,10 +49,8 @@ export const userProfileData = (req, res) => {
 
 
 export const updateProfileDataPersonal = async (req, res) => {
-    
     const { first_name, last_name, email, ID, editingField} = req.body
-    
-    console.log(first_name, last_name, email, ID);
+
     // Will check the existence of the email in the table
     const EmailError = await profileValidation.checkExistingEmail(email, ID, "User");
     console.log("email error checking", EmailError)
@@ -79,8 +75,6 @@ export const updateProfileDataPersonal = async (req, res) => {
 export const updateProfileDataSecurity = async (req, res) => {
     const {password, currentPassword, ID } = req.body;
 
-    console.log(password, ID, currentPassword)
-
     try{
         const getUserPassword = () => {
             return new Promise((resolve, reject) => {
@@ -94,14 +88,12 @@ export const updateProfileDataSecurity = async (req, res) => {
                         console.log("Database query failed at searching for user password")
                         return reject({ status: 404, isValid: false, message: "User not found." });
                     }
-                    console.log("Search password result: " + results[0].account_password)
                     resolve(results[0].account_password)
                 });
             });
         }
         
         const match = await bcrypt.compare(currentPassword, await getUserPassword())
-        console.log("Does it match:", match);
         if (!match) {
             return res.status(400).json({isValid: false, errorField: "currentPassword", message: "Incorrect current password"})
         }
@@ -128,7 +120,6 @@ export const updateProfileDataSecurity = async (req, res) => {
         res.json({isValid: true, message: "Profile Security Data successfully updated."})
 
     } catch (err) {
-        console.log("Error in updating profile security: ", err);
         console.error("Error in updating profile security:", err);
         const status = err.status || 500;
         const message = err.message || "Failed to update profile security.";
@@ -156,7 +147,6 @@ export const userHistoryProfileData = (req, res) => {
             console.log("User history error: " + err)
             return res.status(500).json({isValid: false, message: "Database query failed"})
         }
-        console.log(historyData);
         res.json(historyData);
     });
 };
@@ -167,7 +157,6 @@ export const userHistoryProfileData = (req, res) => {
 
 export const userAdminProfileData = (req, res) => {
     const { ID } = req.params
-    console.log("ID from admin", ID)
     const sqlQueryUserAdminProfile = `SELECT admin_code, first_name, last_name, email
     FROM admin_information
     WHERE admin_id = ?`
@@ -177,7 +166,6 @@ export const userAdminProfileData = (req, res) => {
             return res.status(500).json({isValid: false, message: "Database query failed"})
         }
 
-        console.log("this is the user profile query", profileData)
         const picQuery = "SELECT prof_pic FROM admin_profile_pic WHERE ID = ?";
         connection.query(picQuery, [ID], (err, picResult) => {
             if (err) return res.status(500).json({ message: "Profile picture fetch failed", err });
@@ -186,7 +174,6 @@ export const userAdminProfileData = (req, res) => {
             if (picResult.length > 0 && picResult[0].prof_pic) {
                 profileImageBase64 = `data:image/jpeg;base64,${picResult[0].prof_pic.toString("base64")}`;
             }
-            console.log(profileData);
             return res.status(200).json({
                 ...profileData[0],
                 profile_image: profileImageBase64
@@ -197,7 +184,6 @@ export const userAdminProfileData = (req, res) => {
 
 export const updateAdminDataPersonal = async(req, res) => {
     const {first_name, last_name, email, ID } = req.body;
-    console.log(first_name, last_name, email, ID);
     
     // Will check if the email is already taken by other admins
     const EmailError = await profileValidation.checkExistingEmail(email, ID, "Admin");
@@ -223,8 +209,6 @@ export const updateAdminDataPersonal = async(req, res) => {
 export const updateAdminDataSecurity = async(req, res) => {
     const {currentPassword, password, ID } = req.body;
 
-    console.log("admin profile put controler", currentPassword, password, ID);
-
     try{
         const getUserPassword = () => {
             return new Promise((resolve, reject) => {
@@ -237,14 +221,12 @@ export const updateAdminDataSecurity = async(req, res) => {
                         console.log("Database query failed at searching for user password")
                         return reject({ status: 404, isValid: false, message: "User not found." });
                     }
-                    console.log("Search password result: " + results[0].account_password)
                     resolve(results[0].account_password)
                 });
             });
         }
         
         const match = await bcrypt.compare(currentPassword, await getUserPassword())
-        console.log("Does it match:", match);
         if (!match) {
             return res.status(400).json({isValid: false, errorField: "currentPassword", message: "Incorrect current password"})
         }
@@ -286,8 +268,6 @@ export const uploadFile = async (req, res) => {
     const ID = req.body.ID;
     const accountType = req.body.accountType; 
 
-    console.log("this is the upload file talking", ID, accountType)
-
     if (!file) return res.status(400).json({ message: "No file uploaded" });
 
     const tableType = accountType === "Admin" ? "admin" : "user";
@@ -317,7 +297,6 @@ export const getProfilePic = (req, res) => {
     connection.query(sql, [ID], (err, picResult) => {
         if (err) return res.status(500).json({ message: "Profile picture fetch failed", err });
 
-        console.log("please pic result", picResult)
         let profileImageBase64 = "./images/default-avatar.jpg";
         if (picResult.length > 0 && picResult[0].prof_pic) {
             profileImageBase64 = `data:image/jpeg;base64,${picResult[0].prof_pic.toString("base64")}`;

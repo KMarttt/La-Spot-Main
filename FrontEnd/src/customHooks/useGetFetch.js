@@ -3,7 +3,6 @@ import { useAuth } from "./AuthContext";
 
 export function useGetFetch(url){
     const { auth, setAuth } = useAuth();
-    console.log("Access Token:", auth.accessToken);
 
     
     const [data, setData] = useState([]);
@@ -13,13 +12,11 @@ export function useGetFetch(url){
     const triggerGet = (url) => {
         setIsPending(false);
         setError(null);
-
+        
         if(!url) {
             setIsPending(false);
             return;
         } 
-        // console.log("Request URL:", url);
-        // console.log("Sending GET request with token:", accessToken);
         const fetchSetUp = {
             method: "GET",
             headers: {
@@ -30,7 +27,6 @@ export function useGetFetch(url){
 
         fetch(url, fetchSetUp)
         .then(async res => {
-            console.log(res.status);
             if (res.status === 403) {
                 console.log("Access token expired, refreshing token...")
                 return fetch("http://localhost:8080/refresh", {
@@ -39,8 +35,6 @@ export function useGetFetch(url){
                 })
                 .then(res => res.json())
                 .then(async data => {
-                    console.log(data);
-                    console.log("Updated token: " + data.accessToken)
                     setAuth({
                         accessToken: data.accessToken,
                         ID: data.ID,
@@ -61,13 +55,10 @@ export function useGetFetch(url){
             return res.json()
 
         }).then(data =>  {
-            console.log("Data Fetched (GET)");
-            console.log(data);
             setData(data);
             setError(null);
         }).catch(err => {
             setError(err.message);
-            console.log("erro error");
         }).finally(() => {
             setIsPending(false);
         })

@@ -14,10 +14,6 @@ export function checkExistingEmail(email, account_type) {
                 return reject(error);
             }
             
-            console.log("check existing email email result",result);
-            console.log("email");
-            console.log(querySQL);
-            
             if (Object.keys(result).length === 0) {
                 resolve({exist: true})
             } else {

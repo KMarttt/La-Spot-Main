@@ -11,7 +11,6 @@ export function checkingCarPlate(carPlate) {
                     console.log(err);
                     res.json({isValid: false, message: "Database query failed"})
                 } else {
-                    console.log(data);
                     // if the plate does not exist or if the vehicle is already parked, return false
                     // if the plate exist and is not currently parked, return true
                     if (data.length <= 0){

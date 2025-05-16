@@ -9,7 +9,7 @@ export const accountRecord = (req, res) => {
     
     connection.query( queryAccountRecord, [], (err, data) => {
         if (err) {
-            console.log("An error has occured")
+            console.log("An error has occured in the querying the database")
             return res.status(500).json({isValid: false, message: "Database query failed"})
         } else {
             console.log(data)
@@ -27,7 +27,7 @@ export const adminParkingHistory = (req, res) => {
 
     connection.query(queryAccountHistory, [], (err, data) => {
         if (err){
-            console.log("An error has occured")
+            console.log("An error has occured in the querying the database")
             return res.status(500).json({isValid: false, message: "Database query failed"})
         } else {
             console.log(data)

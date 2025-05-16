@@ -8,20 +8,11 @@ export const signupPost = async (req, res) => {
     // Student and Worker Account Creation
     if (accountType === "Student" || accountType === "Worker") {
         const { firstName, lastName, email, userId, password, vehicle, licensePlate } = req.body;
-        console.log(accountType);
-        console.log(firstName);
-        console.log(lastName);
-        console.log(email);
-        console.log(userId);
-        console.log(password);
-        console.log(vehicle);
-        console.log(licensePlate);
 
         try {
             const resultCheckExistingUserData = await signUpValidation.checkExistingUserData(email, userId, licensePlate);
             if (resultCheckExistingUserData.exist == true) {
                 resultCheckExistingUserData.accountType = accountType;
-                console.log(resultCheckExistingUserData);
                 return res.json(resultCheckExistingUserData);
                 
             } else {
@@ -64,21 +55,12 @@ export const signupPost = async (req, res) => {
     // Admin Account Creation
     if (accountType === "Admin") {
         const { firstName, lastName, adminCode, email, password} = req.body;
-        console.log(accountType);
-        console.log(firstName);
-        console.log(lastName);
-        console.log(adminCode);
-        console.log(password);
-        console.log(email)
-    
-        console.log(req.body);
 
         try{
             console.log("Proceeding to check existing admin code...")
             const resultCheckExisitingAdminData = await signUpValidation.checkExistingAdminData(adminCode, email);
 
             if (Object.keys(resultCheckExisitingAdminData).length > 0){
-                console.log(resultCheckExisitingAdminData);
                 resultCheckExisitingAdminData.accountType = "Admin"
                 return res.json(resultCheckExisitingAdminData);
             } else {

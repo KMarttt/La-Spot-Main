@@ -39,9 +39,7 @@ export const TableBodyParkingAdmin = ({
     // Codes after the Post Operation
     useEffect(() => {
         if (Object.keys(isVehiclePostSucess).length !== 0){
-                console.log(isVehiclePostSucess)
             if (isVehiclePostSucess.isValid == true){
-                console.log(isVehiclePostSucess.message)
                 onRefresh();
             } else {
                 setCarPlate("");
@@ -55,11 +53,8 @@ export const TableBodyParkingAdmin = ({
     useEffect(() => {
         if (Object.keys(isPutSuccess).length !== 0) {
             if (isPutSuccess.isValid == true) {
-                console.log(isPutSuccess.message)
                 onRefresh();
-            } else {
-                console.log(isPutSuccess.message)
-            }
+            } 
         }
     }, [isPutSuccess])
 
@@ -75,7 +70,6 @@ export const TableBodyParkingAdmin = ({
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            console.log(carPlate)
             const carPlatePattern = /^(?=(?:.*\d){3,4})(?=(?:.*[A-Z]){3})[A-Z0-9]{6,7}$/;
 
             if (!carPlate.match(carPlatePattern)) {
@@ -91,7 +85,6 @@ export const TableBodyParkingAdmin = ({
 
     // Will Trigger the PUT custom hook (add time_out value)
     const handleDelete = () => {
-        console.log("Initiating delete...")
         const ID = auth.ID;
         vehiclePlate ? triggerPut("http://localhost:8080/adminViewZone/vacatingParkingSpace", {vehiclePlate, ID})  : ""
     }

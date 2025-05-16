@@ -35,7 +35,6 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
 
   const handleEditClick = (section) => {
     setTempProfile(profileData);
-    console.log(profileData)
     setEditingField(section);
   };
 
@@ -53,7 +52,6 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
 
     const namePattern = /^[a-zA-Z]{2,}(?: [a-zA-Z]+)*$/;
     const emailPattern = /^[a-zA-Z0-9][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    console.log("this is the email temp profile from the validation regex of: ", tempProfile.email)
 
     if (editingField === "personal"){
       if (namePattern.test(tempProfile.first_name) === false){
@@ -102,7 +100,6 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
           "ID": auth.ID,
         })
       } else if (editingField === "security") {
-        console.log("Security:", tempProfile.currentPassword)
         setPutProfileData({
           "currentPassword": tempProfile.currentPassword,
           "password": tempProfile.newPassword,
@@ -115,9 +112,6 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
   // Updating the profile data
   useEffect(() => {
     if (Object.keys(putProfileData).length !== 0) {
-      console.log("please work put, please")
-      console.log("editing field to be sent:", editingField);
-      console.log("put data to be sent:", putProfileData);
       if (editingField === "personal") {
         triggerPut(`http://localhost:8080/admin-profile-personal-update`, putProfileData)
       } else if (editingField === "security") {
@@ -129,15 +123,10 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
   // Will make web changes based on the data returned by put fetch
   useEffect(() => {
     if (updateError){
-      console.error("Profile update error:", updateError);
-      console.log("inputRefs.current:", inputRefs.current);
-      console.log("editingField:", editingField);
       let newErrors = {};
 
       if (updateError.errorField === "email"){
-        console.log("the email already exist okay, so stop!", updateError.message)
         newErrors["email"] = true;
-        console.log(tempProfile["email"]);
         inputRefs.current["email"].placeholder = updateError.message
         tempProfile["email"] = "";
       }

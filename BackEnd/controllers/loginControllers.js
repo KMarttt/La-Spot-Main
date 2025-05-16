@@ -24,7 +24,6 @@ transporter.verify((err) => {
 // Login and Authentication 
 export const handleLogin = async (req, res) => {
     const { email: username, password } = req.body;
-    console.log("Handling Login")
 
     let sqlQuerySearchUser;
     if (username.includes("@")){
@@ -53,8 +52,6 @@ export const handleLogin = async (req, res) => {
             return res.status(500).json({ "message": "Database query error" });
         }
         
-        console.log(userData)
-
         if (Object.keys(userData).length === 0) {
             return res.status(400).json({ "message": "Invalid email" });
         } 
@@ -76,7 +73,6 @@ export const handleLogin = async (req, res) => {
                     process.env.ACCESS_TOKEN_SECRET,
                     { expiresIn: '15m' } 
                 );
-                console.log("refresh token id state: " +  userData[0].ID)
                 const refreshToken = jwt.sign(
                     
                     { "ID": userData[0].ID },
@@ -209,7 +205,6 @@ export const resetPassword = (req, res) => {
         if (rows.length === 0) return res.status(400).json({ message: "Invalid or expired OTP" });
 
         const email = rows[0].email;
-        console.log("this is the new password from the resetpassword", newPassword);
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
         const updateSQL = `UPDATE ${account_information_table} SET account_password = ? WHERE email = ?`;

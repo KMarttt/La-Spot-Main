@@ -21,16 +21,10 @@ export function AuthProvider({ children }) {
                     ID: data.ID,
                     accountType: data.accountType,
                 });   
-                console.log(`Auth set to: 
-                    accessToken: ${data.accessToken}
-                    ID: ${data.ID}
-                    accountType: #${data.accountType}`
-                );
             }).catch (err => {
                 console.log(err);
                 setAuth(null); // not logged in
             }).finally(() => {
-                console.log("this is the auth message from auth context: ", auth);
                 setLoading(false);
             })       
         };

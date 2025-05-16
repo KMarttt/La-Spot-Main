@@ -18,7 +18,6 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
 
 
   const {auth, setAuth} = useAuth();
-  console.log("Auth object:", auth);
 
   // State to track which tab is currently active (profile or history)
   const [activeTab, setActiveTab] = useState("profile");
@@ -34,10 +33,7 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
   const [refreshKey, setRefreshKey] = useState(0);
 
 
-  console.log("please work initial mount")
-
   useEffect(() => {
-    console.log(auth.ID);
       triggerGet(`http://localhost:8080/profile/${auth.ID}`)
   }, [refreshKey, refreshPage, auth.ID])
 
@@ -81,7 +77,6 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
     const emailPattern = /^[a-zA-Z0-9][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     let newErrors = {}
-    console.log("this is the email temp profile from the validation regex of: ", tempProfile.email)
     // Validating personal information
     if (editingField === "personal"){
       if (namePattern.test(tempProfile.first_name) === false){
@@ -138,7 +133,6 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
           "ID": auth.ID,
         })
       } else if (editingField === "security") {
-        console.log("Security:", tempProfile.currentPassword)
         setPutProfileData({
           "currentPassword": tempProfile.currentPassword,
           "password": tempProfile.newPassword,
@@ -152,9 +146,6 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
   useEffect(() => {
     
     if (Object.keys(putProfileData).length !== 0) {
-      console.log("please work put, please")
-      console.log("editing field to be sent:", editingField);
-      console.log("put data to be sent:", putProfileData);
       if (editingField === "personal") {
         triggerPut(`http://localhost:8080/profile-personal-update`, putProfileData)
       } else if (editingField === "security") {
@@ -167,15 +158,10 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
   // Will check if there's an error in the put request
   useEffect(() => {
     if (updateError){
-      console.error("Profile update error:", updateError);
-      console.log("inputRefs.current:", inputRefs.current);
-      console.log("editingField:", editingField);
       let newErrors = {};
 
       if (updateError.errorField === "email"){
-        console.log("the email already exist okay, so stop!", updateError.message)
         newErrors["email"] = true;
-        console.log(tempProfile["email"]);
         inputRefs.current["email"].placeholder = updateError.message
         tempProfile["email"] = "";
       }
@@ -252,7 +238,6 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
   if (!profileData || profileData.length === 0) {
     return <p> "Fetching data"</p>
   }
-  console.log("this is the profile data from the frontend",profileData);
 
   return (
     <section className="userProfile__layout">

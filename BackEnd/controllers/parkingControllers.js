@@ -10,19 +10,17 @@ export const userAssignedParkLot = (req, res) => {
 
     connection.query(sqlQuery, [ID], (err, data) => {
         if (err) {
-            console.log("An error has occurred");
+            console.log("An error has occurred while querying the assigned lot of the user");
             return res.status(500).json({ error: "Database query failed" });
         }
-        console.log(data);
         res.json(data);
     })
 }
 
 export const parkingZones = (req, res) => {
-    console.log("handling the parking zones")
     connection.query("SELECT DISTINCT zone FROM lot;", (err, data) => {
         if (err) {
-            console.log("An error has occurred");
+            console.log("An error has occurred while querying the parking zone name");
             return res.status(500).json({ error: "Database query failed" });
         }
 
@@ -36,7 +34,7 @@ export const parkingZones = (req, res) => {
             return new Promise((resolve, reject) => {
                 connection.query("SELECT zone, parking_status FROM lot WHERE zone = ?", [section], (err, data) => {
                     if (err) {
-                        console.log("An error has occurred");
+                        console.log("An error has occurred while querying the status of the parking zones");
                         reject(err);
                     } else {
                         let vacantNum = data.filter((lot) => lot.parking_status == "vacant").length;
@@ -73,9 +71,8 @@ export const parkingZone = (req, res) => {
 
     connection.query(sqlQeuryParkingZoneStatus, [zone], (err, data) => {
         if (err){
-            console.log("An error has occured")
+            console.log("An error has occured while querying the parking zone")
         } else {
-            console.log(data);
             res.json(data);
         }
     })
@@ -83,7 +80,6 @@ export const parkingZone = (req, res) => {
 
 export const parkingOverviewAdmin = (req, res) => {
     const {selectedZone} = req.params
-    console.log(selectedZone);
 
     const sqlQuery = "SELECT lot.lot_id, lot.zone, lot.parking_status, parking.user_id, user_information.account_type, vehicle.vehicle_type, vehicle.vehicle_plate, parking.occupied_at " + 
         "FROM lot " +
@@ -100,19 +96,16 @@ export const parkingOverviewAdmin = (req, res) => {
     connection.query(sqlQuery, [selectedZone], (err, data) => {
         if (err){
             console.log(err);
-            console.log("An error has occured")
+            console.log("An error has occured in the parking overview admin")
         } else {
-            console.log(data);
             res.json(data);
         }
     })
 }
 
 export const parkVehicle = async (req, res) => {
-    console.log("Controllers reached")
     const { lotID, zone, carPlate, ID} = req.body
     
-    console.log("this is the parking admin speaking", carPlate, lotID, zone, ID);
     try {
         const checkingCarPlateResult = await checkingCarPlate(carPlate);
 
@@ -149,9 +142,7 @@ export const parkVehicle = async (req, res) => {
 }
 
 export const vacatingParkingSpace = (req, res) => {
-    console.log("vacating parking space reached");
     const {vehiclePlate, ID } = req.body
-    console.log("Vacating parking", vehiclePlate, ID)
 
     const sqlQueryUpdateLot = "UPDATE lot SET parking_status = 'vacant' WHERE lot.lot_id IN (SELECT parking.lot_id FROM parking WHERE parking.vehicle_plate = ? and vacated_at IS NULL);"
     const sqlQueryUpdateParking = `UPDATE parking 

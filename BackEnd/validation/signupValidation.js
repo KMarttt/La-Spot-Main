@@ -13,7 +13,6 @@ export function checkExistingUserData(email, id, licensePlate) {
         "WHERE vehicle.vehicle_plate = ?"
 
         connection.query(querySQL, [id, email, licensePlate], (error, results) => {
-            console.log("Validation Results:", results);
             if (error) {
                 console.log(error);
                 return reject(error);
@@ -37,8 +36,6 @@ export function checkExistingUserData(email, id, licensePlate) {
                 } else {
                     validationError.exist = false;
                 }
-
-                console.log(validationError);
                 resolve(validationError);
                 
             }
@@ -56,7 +53,6 @@ export function checkExistingAdminData(adminCode, email) {
                 console.log(error);
                 return reject(error);
             } else {
-                console.log("Admin Code Validation Results:", adminCodeResult);
                 let validationError = {}
 
                 if (Object.keys(adminCodeResult).length === 0 ) {
@@ -74,7 +70,6 @@ export function checkExistingAdminData(adminCode, email) {
                     if (Object.keys(emailResult).length !== 0) {
                         validationError.emailError =  "Email already taken"
                     }
-                    console.log(validationError)
                     resolve(validationError);
                 })
             }

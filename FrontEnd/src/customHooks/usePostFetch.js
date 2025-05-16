@@ -7,7 +7,6 @@ export function usePostFetch() {
     const [isPending, setIsPending] = useState(false);
     const [error, setError] = useState(null);
     const { auth, setAuth } = useAuth();
-    console.log("Access Token:", auth?.accessToken);
 
     const triggerPost = (url, postData) => {
         setIsPending(true);
@@ -40,8 +39,6 @@ export function usePostFetch() {
                 })
                 .then(res => res.json())
                 .then(async data => {
-                    console.log(data);
-                    console.log("Updated token: " + data.accessToken)
                     setAuth({
                         accessToken: data.accessToken,
                         ID: data.ID,
@@ -55,15 +52,12 @@ export function usePostFetch() {
 
             if (!res.ok) {
                 const responseData = await res.json();
-                console.log("Error message: " + responseData.message)
                 throw new Error (responseData.message || "An unknown error has occured")
             }
 
             return res.json();
 
         }). then(data => {
-            console.log("Data Posted");
-            console.log(data);
             setData(data);
             setError(null)
         }).catch (err => {

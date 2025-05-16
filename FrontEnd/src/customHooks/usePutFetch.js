@@ -7,7 +7,6 @@ export function usePutFetch() {
     const [isPending, setIsPending] = useState(false);
     const [error, setError] = useState(null);
     const { auth, setAuth } = useAuth();
-    console.log("Access Token:", auth?.accessToken);
 
     const triggerPut = (url, putData) => {
         setIsPending(true);
@@ -36,7 +35,6 @@ export function usePutFetch() {
                 })
                 .then (res => res.json())
                 .then (data => {
-                    console.log("Updated token: " + data.accessToken)
                     setAuth({
                         accessToken: data.accessToken,
                         ID: data.ID,
@@ -56,7 +54,6 @@ export function usePutFetch() {
 
             const data = await res.json()
             if (!res.ok) {
-                console.log("Error message: " + data.message)
                 setError(data);
                 throw new Error (data.message || "An unknown error has occured")
             }
@@ -64,14 +61,9 @@ export function usePutFetch() {
             return data;
 
         }). then(data => {
-            console.log("Data Putted");
-            console.log(data);
-            console.log(error);
             setData(data);
             setError(null)
         }).catch (err => {
-            console.log("err caught", err)
-            console.log("error caught:", error);
             setData(null);
         }). finally(() => {
             setIsPending(false);

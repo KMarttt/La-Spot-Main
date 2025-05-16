@@ -43,8 +43,6 @@ const LoginPop = ({ setIsLoginOpen }) => {
         email: email.value.toUpperCase(),
         password: password.value,
       }
-      
-      console.log("Form sending:", formData);
       logging(formData);
     }
   }
@@ -68,7 +66,6 @@ const LoginPop = ({ setIsLoginOpen }) => {
     }).then(data => {
       console.log("User has been logged in successfully")
       setIsLoginOpen(false)
-      console.log(data);
       setAuth({
         accessToken: data.accessToken,
         ID: data.ID,
