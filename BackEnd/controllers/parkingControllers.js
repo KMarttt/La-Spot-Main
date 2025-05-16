@@ -2,10 +2,24 @@ import connection from "../config/connectDB.js";
 import { checkingCarPlate } from "../validation/parkingValidation.js";
 
 
-export const parkingZones = (req, res) => {
-    // const authHeader = req.headers["authorization"];
-    // console.log(authHeader)
+export const userAssignedParkLot = (req, res) => {
+    const { ID } = req.params;
+    const sqlQuery = `SELECT CONCAT(zone, " ", lot_id) AS parking_lot
+        FROM parking
+        WHERE vacated_at IS NULL AND user_id = ?`;
 
+    connection.query(sqlQuery, [ID], (err, data) => {
+        if (err) {
+            console.log("An error has occurred");
+            return res.status(500).json({ error: "Database query failed" });
+        }
+
+        console.log(data);
+        res.json(data);
+    })
+}
+
+export const parkingZones = (req, res) => {
     console.log("handling the parking zones")
     connection.query("SELECT DISTINCT zone FROM lot;", (err, data) => {
         if (err) {

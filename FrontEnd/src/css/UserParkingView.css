@@ -170,6 +170,13 @@
   margin-top: 50px;
 }
 
+/* Additional */
+
+.user_parking_spot {
+  font-weight: 800 !important;
+  color: red;
+}
+
 /* ==================== Responsive Design ==================== */
 
 /* 768px (typical for tablets and larger phones) */
@@ -207,3 +214,5 @@
     padding: 2rem 1rem;
   }
 }
+
+

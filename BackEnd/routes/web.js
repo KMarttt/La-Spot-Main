@@ -36,6 +36,7 @@ let initWebRoutes = (app) => {
     
     // Will get the list of parking zone and the number of available and occupied spot
     router.get("/parkingZones", verifyJWT, verifyAccountType("Student", "Worker"), parkingControllers.parkingZones)
+    router.get("/assignedLot/:ID", verifyJWT, verifyAccountType("Student", "Worker"), parkingControllers.userAssignedParkLot)
 
     // Will get all of the lot data in a parking zone
     router.get("/parkingZone/:zone",  verifyJWT, verifyAccountType("Student", "Worker"),  parkingControllers.parkingZone)
