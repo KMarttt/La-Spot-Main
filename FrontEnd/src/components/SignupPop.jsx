@@ -70,76 +70,6 @@ const SignupPop = ({ setIsSignupOpen, setIsLoginOpen }) => {
     ],
   };
 
-  // Sign-up fetch  to the server
-  const signing = async(formData) => {
-    fetch("http://localhost:8080/signup", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
-    }).then(async res => {
-
-      if (!res.ok) {
-        const responseData = await res.json();
-        console.log("Error message: " + responseData.message)
-        throw new Error (responseData.message || "An unknown error has occured")
-      }
-      return res.json();
-    }).then(data => {
-      if (data?.success === true) {
-        console.log("Data has been posted successfully")
-        setIsSignupOpen(false);
-        setIsLoginOpen(true);
-      } else {
-        console.log("Data has not been posted", data) 
-        const newErrors = {};
-        let userId;
-        if (data.accountType === "Student" || data.accountType === "Worker") {
-          data.accountType === "Student" ? userId = "studentNum" : userId = "workId";
-
-          if (data.email ? true : false) {
-            console.log("Email already exists in the database");
-            newErrors["email"] = true;
-            refs.current["email"].value = "";
-            refs.current["email"].placeholder = "Email already exists"
-          }
-          if (data.userId ? true : false) {
-            console.log("User ID already exists in the database")
-            newErrors[userId] = true;
-            refs.current[userId].value = "";
-            refs.current[userId].placeholder = "User ID already exists"
-          }
-          if (data.vehicle ? true : false) {
-            console.log("Vehicle already exists in the database");
-            newErrors["licensePlate"] = true;
-            refs.current["licensePlate"].value = "";
-            refs.current["licensePlate"].placeholder = "Vehicle already exists"
-          }
-        } else if (data.accountType === "Admin") {
-          console.log(data.codeError)
-          if (data.codeError ? true : false) {
-            console.log(data.codeError)
-            newErrors["adminCode"] = true;
-            refs.current["adminCode"].value = "";
-            refs.current["adminCode"].placeholder = data.codeError;
-          }
-
-          if (data.emailError ? true : false) {
-            console.log(data.codeError)
-            newErrors["email"] = true;
-            refs.current["email"].value = "";
-            refs.current["email"].placeholder = data.emailError;
-          }
-        }
-        
-
-        setErrors(newErrors);
-      }
-    })
-  }
-
   // Will Reset the form fields when the account type changes
   useEffect(() => {
     fieldConfigs[accountType]?.forEach((field) => {
@@ -149,6 +79,7 @@ const SignupPop = ({ setIsSignupOpen, setIsLoginOpen }) => {
     });
   }, [accountType]);
 
+  // Data validation
   const handleSubmit = (event) => {
     event.preventDefault();
     
@@ -257,9 +188,78 @@ const SignupPop = ({ setIsSignupOpen, setIsLoginOpen }) => {
         })
       }
     }
-
     signing(formData);
   };
+
+  // Sign-up fetch  to the server
+  const signing = async(formData) => {
+    fetch("http://localhost:8080/signup", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    }).then(async res => {
+
+      if (!res.ok) {
+        const responseData = await res.json();
+        console.log("Error message: " + responseData.message)
+        throw new Error (responseData.message || "An unknown error has occured")
+      }
+      return res.json();
+    }).then(data => {
+      if (data?.success === true) {
+        console.log("Data has been posted successfully")
+        setIsSignupOpen(false);
+        setIsLoginOpen(true);
+      } else {
+        console.log("Data has not been posted", data) 
+        const newErrors = {};
+        let userId;
+        if (data.accountType === "Student" || data.accountType === "Worker") {
+          data.accountType === "Student" ? userId = "studentNum" : userId = "workId";
+
+          if (data.email ? true : false) {
+            console.log("Email already exists in the database");
+            newErrors["email"] = true;
+            refs.current["email"].value = "";
+            refs.current["email"].placeholder = "Email already exists"
+          }
+          if (data.userId ? true : false) {
+            console.log("User ID already exists in the database")
+            newErrors[userId] = true;
+            refs.current[userId].value = "";
+            refs.current[userId].placeholder = "User ID already exists"
+          }
+          if (data.vehicle ? true : false) {
+            console.log("Vehicle already exists in the database");
+            newErrors["licensePlate"] = true;
+            refs.current["licensePlate"].value = "";
+            refs.current["licensePlate"].placeholder = "Vehicle already exists"
+          }
+        } else if (data.accountType === "Admin") {
+          console.log(data.codeError)
+          if (data.codeError ? true : false) {
+            console.log(data.codeError)
+            newErrors["adminCode"] = true;
+            refs.current["adminCode"].value = "";
+            refs.current["adminCode"].placeholder = data.codeError;
+          }
+
+          if (data.emailError ? true : false) {
+            console.log(data.codeError)
+            newErrors["email"] = true;
+            refs.current["email"].value = "";
+            refs.current["email"].placeholder = data.emailError;
+          }
+        }
+        
+
+        setErrors(newErrors);
+      }
+    })
+  }
 
   return (
     <div className="signup-overlay">

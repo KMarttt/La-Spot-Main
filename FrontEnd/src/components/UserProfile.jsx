@@ -51,16 +51,27 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
 
   // Function to start editing a specific section
   const handleEditClick = (section) => {
-    // setTempProfile(profileData[0]);
-
     // Ensures that the input fields for security are cleared and preped for user inputs 
     if (section === "security") {
       setTempProfile({...profileData, currentPassword: "", newPassword: "", confirmPassword: "", })
     } else {
       setTempProfile(profileData); // copy current profile to temp state
     }
-
     setEditingField(section); // set which field is being edited
+  };
+
+  // Will handle the cancel from the modal
+  const handleCancel = () => {
+    setEditingField(null);
+    setErrors({});
+  }
+
+  // Update temporary profile while editing
+  const handleChange = (field, value) => {
+    setTempProfile(prevTempProfile => ({ // Use the functional update form
+    ...prevTempProfile,
+    [field]: value,
+  }));
   };
 
   // Function to validate input and initialize put data
@@ -137,6 +148,7 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
     }
   };
 
+  // PUT FETCH
   useEffect(() => {
     
     if (Object.keys(putProfileData).length !== 0) {
@@ -189,23 +201,9 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
 
   }, [updatedProfileData, updateError])
 
-  // Will handle the cancel from the modal
-  const handleCancel = () => {
-    setEditingField(null);
-    setErrors({});
-  }
-
-  // Update temporary profile while editing
-  const handleChange = (field, value) => {
-    setTempProfile(prevTempProfile => ({ // Use the functional update form
-    ...prevTempProfile,
-    [field]: value,
-  }));
-  };
-
-
   // Profile Picture Logics
 
+  // Will set the preview of the profile
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -219,6 +217,7 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
     }
   }
 
+  // Will delete the preview of the profile
   const handleCancelProfilePic = (e) => {
     setTempProfile(prevTempProfile => ({ // Use the functional update form
         ...prevTempProfile,
@@ -227,6 +226,7 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
       }));
   }
 
+  // Will update the profile picture of the user
   const handleFileUpload = () => {
     if (!tempProfile.rawProfilePic) return alert("Please select an image first");
 
@@ -239,6 +239,7 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
 
   }
 
+  // After the PUT fetch, re-render the profile picture
   useEffect(() => {
     if (Object.keys(postedPicData).length !== 0) {
       if(postedPicData.valid) {

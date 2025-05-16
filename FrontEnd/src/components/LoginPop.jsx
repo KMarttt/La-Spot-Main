@@ -14,6 +14,40 @@ const LoginPop = ({ setIsLoginOpen }) => {
   const { auth, setAuth } = useAuth(); 
   const navigate = useNavigate();
 
+  // Login Form Validation
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const email = emailRef.current;
+    const password = passwordRef.current;
+    let valid = true;
+
+    if (!email.value) {
+      setErrors((prev) => ({ ...prev, email: true }));
+      valid = false;
+    } else {
+      setErrors((prev) => ({ ...prev, email: false }));
+      email.placeholder = "Email";
+    }
+
+    if (!password.value) {
+      setErrors((prev) => ({ ...prev, password: true }));
+      valid = false;
+    } else {
+      setErrors((prev) => ({ ...prev, password: false }));
+      password.placeholder = "Password";
+    }
+
+    if (valid) {
+      // Proceed with form submission
+      let formData = {
+        email: email.value.toUpperCase(),
+        password: password.value,
+      }
+      
+      console.log("Form sending:", formData);
+      logging(formData);
+    }
+  }
 
   // Loging in the data
   const logging = async(formData) => {
@@ -59,43 +93,6 @@ const LoginPop = ({ setIsLoginOpen }) => {
       }
     })  
   }
-
-  // Login Form Validation
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const email = emailRef.current;
-    const password = passwordRef.current;
-    let valid = true;
-
-    if (!email.value) {
-      setErrors((prev) => ({ ...prev, email: true }));
-      valid = false;
-    } else {
-      setErrors((prev) => ({ ...prev, email: false }));
-      email.placeholder = "Email";
-    }
-
-    if (!password.value) {
-      setErrors((prev) => ({ ...prev, password: true }));
-      valid = false;
-    } else {
-      setErrors((prev) => ({ ...prev, password: false }));
-      password.placeholder = "Password";
-    }
-
-    if (valid) {
-      // Proceed with form submission
-      let formData = {
-        email: email.value.toUpperCase(),
-        password: password.value,
-      }
-      
-      console.log("Form sending:", formData);
-      logging(formData);
-    }
-  }
-    
-
 
   return (
     <div className="login-overlay">

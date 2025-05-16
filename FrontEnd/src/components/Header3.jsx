@@ -9,7 +9,8 @@ export function Header3({ refreshPage }) {
   const [bgOpacity, setBgOpacity] = useState(1);
   const { data, isPending, error, triggerGet } = useGetFetch();
   const { auth, setAuth } = useAuth();
-  
+    
+  // Will fetch the profile picture
     useEffect(() => {
       triggerGet(`http://localhost:8080/get-profile-pic/${auth.ID}/${auth.accountType}`)
     }, [refreshPage])

@@ -7,13 +7,9 @@ export function AdminParking() {
   const [selectedZone, setSelectedZone] = useState("ADG");
   const [show, setShow] = useState("showAll");
   const [refreshKey, setRefreshKey] = useState(0);
-
-  const handleRefresh = () => {
-    setRefreshKey((prevKey) => prevKey + 1);
-  };
-
   const { data: lots, isPending, error, triggerGet } = useGetFetch();
 
+  // Will GET the parking data
   useEffect(() => {
     triggerGet(`http://localhost:8080/parkingOverviewAdmin/${selectedZone}`);
   }, [selectedZone, refreshKey]);
@@ -25,6 +21,11 @@ export function AdminParking() {
   const numOccupied = lots.filter(
     (lot) => lot.parking_status === "occupied"
   ).length;
+
+  // Will re-render the component
+  const handleRefresh = () => {
+    setRefreshKey((prevKey) => prevKey + 1);
+  };
 
   return (
     <>

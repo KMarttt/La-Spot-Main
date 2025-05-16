@@ -30,7 +30,7 @@ export const TableBodyParkingAdmin = ({
     // Will POST the CarPlate for Vehicle Allocation
     const {data: isVehiclePostSucess, isPending: isPostPending, error: postError, triggerPost} = usePostFetch()
     // Will DELETE the vehicle from the lot
-    const {data: isDeleteSuccess, isPending: isPutPending, error: deleteError, triggerPut} = usePutFetch()
+    const {data: isPutSuccess, isPending: isPutPending, error: deleteError, triggerPut} = usePutFetch()
     
     
     // USE EFFECTS \\
@@ -51,17 +51,17 @@ export const TableBodyParkingAdmin = ({
     }, [isVehiclePostSucess])
 
 
-    // Codes after the Delete Operation
+    // Codes after the PUT (add time_out value) Operation
     useEffect(() => {
-        if (Object.keys(isDeleteSuccess).length !== 0) {
-            if (isDeleteSuccess.isValid == true) {
-                console.log(isDeleteSuccess.message)
+        if (Object.keys(isPutSuccess).length !== 0) {
+            if (isPutSuccess.isValid == true) {
+                console.log(isPutSuccess.message)
                 onRefresh();
             } else {
-                console.log(isDeleteSuccess.message)
+                console.log(isPutSuccess.message)
             }
         }
-    }, [isDeleteSuccess])
+    }, [isPutSuccess])
 
     // Will update the vehicle plate when the user types something in the input field
     useEffect(() => {
@@ -89,12 +89,12 @@ export const TableBodyParkingAdmin = ({
         }
     }
 
-        // Will Trigger the Delete Custom Hook
-        const handleDelete = () => {
-            console.log("Initiating delete...")
-            const ID = auth.ID;
-            vehiclePlate ? triggerPut("http://localhost:8080/adminViewZone/vacatingParkingSpace", {vehiclePlate, ID})  : ""
-        }
+    // Will Trigger the PUT custom hook (add time_out value)
+    const handleDelete = () => {
+        console.log("Initiating delete...")
+        const ID = auth.ID;
+        vehiclePlate ? triggerPut("http://localhost:8080/adminViewZone/vacatingParkingSpace", {vehiclePlate, ID})  : ""
+    }
     
 
 

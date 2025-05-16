@@ -15,17 +15,16 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
   const {auth, setAuth} = useAuth();
   const inputRefs = useRef({})
   const [refreshKey, setRefreshKey] = useState(0);
+  const [activeTab, setActiveTab] = useState("profile");
+  const [editingField, setEditingField] = useState(null);
+  const [tempProfile, setTempProfile] = useState({});
+  const [errors, setErrors] = useState({});
+  const [putProfileData, setPutProfileData] = useState({})
 
-  // refreshPage
+  
   useEffect(() => {
     triggerGet(`http://localhost:8080/admin-profile/${auth.ID}`)
   }, [refreshKey, refreshPage, auth.ID])
-
-  const [activeTab, setActiveTab] = useState("profile");
-  const [editingField, setEditingField] = useState(null);
-  const [tempProfile, setTempProfile] = useState(profileData);
-  const [errors, setErrors] = useState({});
-  const [putProfileData, setPutProfileData] = useState({})
 
   
   useEffect(() => {
@@ -38,6 +37,14 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
     setTempProfile(profileData);
     console.log(profileData)
     setEditingField(section);
+  };
+
+  // Update temporary profile while editing
+  const handleChange = (field, value) => {
+    setTempProfile(prevTempProfile => ({ // Use the functional update form
+      ...prevTempProfile,
+      [field]: value,
+    }));
   };
 
   // Will validate the input fields and update the put data (initialization for put fetch)
@@ -84,7 +91,7 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
       setErrors(newErrors)
       console.log("Error state", newErrors)
     } else {
-      // if no errors, update the profile data
+      // if no errors, proceed to update the profile data
       
       // PUT data initialization
       if (editingField === "personal"){
@@ -105,6 +112,7 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
     }
   };
 
+  // Updating the profile data
   useEffect(() => {
     if (Object.keys(putProfileData).length !== 0) {
       console.log("please work put, please")
@@ -115,10 +123,10 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
       } else if (editingField === "security") {
         triggerPut(`http://localhost:8080/admin-profile-security-update`, putProfileData)
       }
-      
     }
   }, [putProfileData])
 
+  // Will make web changes based on the data returned by put fetch
   useEffect(() => {
     if (updateError){
       console.error("Profile update error:", updateError);
@@ -149,6 +157,7 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
     } else if (updatedProfileData && updatedProfileData.isValid === true) {
       console.log("profile updated successfully");
       setRefreshKey(prevKey => prevKey + 1);
+      setErrors({});
       setEditingField(null); // close modal
     }
   }, [updatedProfileData, updateError]);
@@ -159,16 +168,10 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
     setErrors({});
   }
 
-  // Update temporary profile while editing
-  const handleChange = (field, value) => {
-    setTempProfile(prevTempProfile => ({ // Use the functional update form
-      ...prevTempProfile,
-      [field]: value,
-    }));
-  };
-
+  
   // Profile Picture Logics
 
+  // Will set the preview of the profile picture
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -190,6 +193,7 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
       }));
   }
 
+  // Submitting the profile picture
   const handleFileUpload = () => {
     if (!tempProfile.rawProfilePic) return alert("Please select an image first");
 
@@ -202,6 +206,7 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
 
   }
 
+  // Will refresh the page to rerender the profile picture
   useEffect(() => {
     if (Object.keys(postedPicData).length !== 0) {
       if(postedPicData.valid) {

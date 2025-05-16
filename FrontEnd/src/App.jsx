@@ -13,7 +13,6 @@ import { AdminParking } from "./pages/AdminParking";
 import { AdminHistory } from "./pages/AdminHistory";
 import { AdminProfile } from "./pages/AdminProfile";
 
-// import { UserParking } from "./pages/UserParking";
 import { UserParkingView } from "./pages/UserParkingView";
 import { UserParking } from "./pages/UserParking";
 import { UserProfile } from "./pages/UserProfile";

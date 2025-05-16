@@ -21,10 +21,8 @@ const ForgotPassword = ({ goBackToLogin }) => {
     setCode(updatedCode);
   };
 
-
+  // Will submit the email (POST FETCH)
   const handleEmailSubmit = async () => {
-
-
     let newErrors = {};
     let accountType;
 
@@ -75,6 +73,7 @@ const ForgotPassword = ({ goBackToLogin }) => {
     }
   }
 
+  // Will verify the code inputted by the user
   const handleVerifyCode = async () => {
     const enteredCode = code.join("");
     let newErrors = {};
@@ -115,6 +114,7 @@ const ForgotPassword = ({ goBackToLogin }) => {
     }
   }
 
+  // Will submit the new password to the database
   const handlePasswordSubmit = async () => {
     let newErrors = {};
 

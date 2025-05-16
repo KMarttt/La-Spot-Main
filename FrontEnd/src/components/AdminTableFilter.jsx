@@ -6,8 +6,8 @@ export function AdminTableFilter({ columnFilters, setColumnFilters }) {
 
   const user_id =
     (columnFilters ?? []).find((filter) => filter.id == "user_id")?.value || "";
-
-  const onFilterChange = (id, value) =>
+  
+    const onFilterChange = (id, value) =>
     setColumnFilters((prev) =>
       prev
         .filter((f) => f.id !== id)

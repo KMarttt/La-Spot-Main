@@ -24,7 +24,9 @@ export function AdminAccounts() {
     error,
     triggerGet,
   } = useGetFetch();
-  const [columnFilters, setColumnFilters] = useState([]);
+  const [columnFilters, setColumnFilters] = useState([
+    { id: "account_type", value: ["Student"] }
+  ]);
 
   // Trigger Fetch
   useEffect(() => {
@@ -139,7 +141,7 @@ export function AdminAccounts() {
               {/* BUTTONS */}
               <button
                 className={`accountsButton ${
-                  accountType === "students" ? "active" : ""
+                  accountType === "Student" ? "active" : ""
                 }`}
                 onClick={() => handleSelectAccountType("Student")}
               >
@@ -147,7 +149,7 @@ export function AdminAccounts() {
               </button>
               <button
                 className={`accountsButton ${
-                  accountType === "workers" ? "active" : ""
+                  accountType === "Worker" ? "active" : ""
                 }`}
                 onClick={() => handleSelectAccountType("Worker")}
               >
@@ -230,7 +232,6 @@ export function AdminAccounts() {
                 </p>
                 <div className="buttonPagination">
                   {" "}
-                  {/* you may use this class name to edit the pagination button */}
                   <button
                     onClick={() => table.setPageIndex(0)}
                     disabled={!table.getCanPreviousPage()}
