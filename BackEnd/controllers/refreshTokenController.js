@@ -59,7 +59,6 @@ export const handleRefreshToken = (req, res) => {
                     },
                     process.env.ACCESS_TOKEN_SECRET,
                     { expiresIn: '15m' } 
-                    // { expiresIn: '10s' } 
                 );
                 res.json({ accessToken, ID: userData[0].ID, accountType: userData[0].account_type })
             }

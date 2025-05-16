@@ -30,7 +30,6 @@ export const userProfileData = (req, res) => {
             return res.status(500).json({isValid: false, message: "Database query failed"})
         }
         
-        
         console.log("this is the user profile query", profileData)
         const picQuery = "SELECT prof_pic FROM user_profile_pic WHERE ID = ?";
         connection.query(picQuery, [ID], (err, picResult) => {
@@ -40,7 +39,7 @@ export const userProfileData = (req, res) => {
             if (picResult.length > 0 && picResult[0].prof_pic) {
                 profileImageBase64 = `data:image/jpeg;base64,${picResult[0].prof_pic.toString("base64")}`;
             }
-            // profileData.account_password
+
             console.log(profileData);
             return res.status(200).json({
                 ...profileData[0],
@@ -94,7 +93,6 @@ export const updateProfileDataSecurity = async (req, res) => {
                     if (!results || results.length === 0){
                         console.log("Database query failed at searching for user password")
                         return reject({ status: 404, isValid: false, message: "User not found." });
-                        // return res.status(500).json({isValid: false, message: "Database query failed."})
                     }
                     console.log("Search password result: " + results[0].account_password)
                     resolve(results[0].account_password)
@@ -158,7 +156,6 @@ export const userHistoryProfileData = (req, res) => {
             console.log("User history error: " + err)
             return res.status(500).json({isValid: false, message: "Database query failed"})
         }
-
         console.log(historyData);
         res.json(historyData);
     });
@@ -189,7 +186,6 @@ export const userAdminProfileData = (req, res) => {
             if (picResult.length > 0 && picResult[0].prof_pic) {
                 profileImageBase64 = `data:image/jpeg;base64,${picResult[0].prof_pic.toString("base64")}`;
             }
-            // profileData.account_password
             console.log(profileData);
             return res.status(200).json({
                 ...profileData[0],
@@ -236,12 +232,10 @@ export const updateAdminDataSecurity = async(req, res) => {
                 connection.query(sqlQuerySearchPasswordProfile, [ID], (err, results) => {
                     if (err) {
                         return reject({ status: 500, isValid: false, message: "Database query failed." });
-                        
                     };
                     if (!results || results.length === 0){
                         console.log("Database query failed at searching for user password")
                         return reject({ status: 404, isValid: false, message: "User not found." });
-                        // return res.status(500).json({isValid: false, message: "Database query failed."})
                     }
                     console.log("Search password result: " + results[0].account_password)
                     resolve(results[0].account_password)
@@ -275,7 +269,6 @@ export const updateAdminDataSecurity = async(req, res) => {
 
         await updatedPassword ();
         res.json({isValid: true, message: "Admin Profile Security Data successfully updated."})
-
     } catch (err) {
         console.log("Error in updating profile security: ", err);
         const status = err.status || 500;

@@ -13,7 +13,6 @@ export const userAssignedParkLot = (req, res) => {
             console.log("An error has occurred");
             return res.status(500).json({ error: "Database query failed" });
         }
-
         console.log(data);
         res.json(data);
     })

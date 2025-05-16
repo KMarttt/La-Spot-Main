@@ -21,23 +21,18 @@ export const handleLogout = (req, res) => {
     FROM user_information
     WHERE refresh_token = ?`
 
-    
-
     if (!cookies?.jwt) return res.sendStatus(204); // No content
     const refreshToken = cookies.jwt;
-
 
     // Find the refresh token in the DB
     connection.query(sqlQuerySearchUser, [refreshToken, refreshToken], (err, userData) => {
         if (err) {
-            
             return res.status(500).json({ message: "Database query error" });
         } 
 
         if (Object.keys(userData).length === 0) {
             res.clearCookie('jwt', {httpOnly: true, secure: true,})
             return res.sendStatus(204); //Successfull but no content
-
         } 
 
         let sqlQueryDeleteRefreshKey;
@@ -51,19 +46,17 @@ export const handleLogout = (req, res) => {
             SET refresh_token = null
             WHERE admin_id = ?`
         }
-        
+
+        // Delete the refresh token in the database
         connection.query(sqlQueryDeleteRefreshKey, [userData[0].ID], (err, data) => {
             if (err) {
                 console.log(err);
                 return res.sendStatus(500)
             }
-
+            
             console.log("Log out: deleting refresh key")
             res.clearCookie('jwt', {httpOnly: true, secure: true,}) 
             res.sendStatus(204);
-        })
-
-        // Delete the refresh token in the database
-        
+        }) 
     })  
 }

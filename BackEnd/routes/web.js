@@ -34,11 +34,11 @@ let initWebRoutes = (app) => {
 
     // Parking User \\
     
-    // Will get the list of parking zone and the number of available and occupied spot
+    // Parking Overview
     router.get("/parkingZones", verifyJWT, verifyAccountType("Student", "Worker"), parkingControllers.parkingZones)
     router.get("/assignedLot/:ID", verifyJWT, verifyAccountType("Student", "Worker"), parkingControllers.userAssignedParkLot)
 
-    // Will get all of the lot data in a parking zone
+    // Parking Specific Zone
     router.get("/parkingZone/:zone",  verifyJWT, verifyAccountType("Student", "Worker"),  parkingControllers.parkingZone)
 
     // Profile \\
@@ -59,13 +59,13 @@ let initWebRoutes = (app) => {
 
     // Parking Admin \\
 
-    // Will get all of the lot data in a parking zone (admin)
+    // Will GET all of the lot data in a parking zone (admin)
     router.get("/parkingOverviewAdmin/:selectedZone", verifyJWT, verifyAccountType("Admin"), parkingControllers.parkingOverviewAdmin)
 
     // Will POST the vehicle data to the parking zone
     router.post("/adminViewZone/parkVehicle", verifyJWT, verifyAccountType("Admin"), parkingControllers.parkVehicle)
 
-    // Will UPDATE the vehicle data from the parking zone
+    // Will UPDATE the vehicle data from the parking  (add time_out value)
     router.put("/adminViewZone/vacatingParkingSpace", verifyJWT, verifyAccountType("Admin"), parkingControllers.vacatingParkingSpace)
 
 
@@ -74,8 +74,6 @@ let initWebRoutes = (app) => {
 
     // Account History \\
     router.get("/adminHistory", verifyJWT, verifyAccountType("Admin"), otherAdminControllers.adminParkingHistory)
-
-
 
     return app.use("/", router);
 }

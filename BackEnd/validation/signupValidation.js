@@ -77,9 +77,6 @@ export function checkExistingAdminData(adminCode, email) {
                     console.log(validationError)
                     resolve(validationError);
                 })
-
-                
-
             }
         })
     })

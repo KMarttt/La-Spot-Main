@@ -52,15 +52,12 @@ const LoginPop = ({ setIsLoginOpen }) => {
         emailRef.current.value = "";
         emailRef.current.placeholder = "Invalid email";
       }
-
       if (err.message === "Incorrect password") {
         setErrors({ password: true})
         passwordRef.current.value = "";
         passwordRef.current.placeholder = "Incorrect password";
       }
-
-    })
-      
+    })  
   }
 
   // Login Form Validation
@@ -148,7 +145,6 @@ const LoginPop = ({ setIsLoginOpen }) => {
                 placeholder="Password"
                 className={`inputField-login ${errors.password ? "error" : ""}`}
                 ref={passwordRef}
-
               />
               <a
                 href="#"

@@ -11,7 +11,6 @@ export const accountRecord = (req, res) => {
         if (err) {
             console.log("An error has occured")
             return res.status(500).json({isValid: false, message: "Database query failed"})
-
         } else {
             console.log(data)
             res.json(data)

@@ -5,7 +5,6 @@ export const verifyAccountType = (...allowedAccountType) => {
         const accountTypeArrays = [...allowedAccountType];
         console.log(accountTypeArrays);
         console.log(req.accountType);
-        // const result = req.accountType.map(type => typeArray.includes(type)).find(val => val === true);
         const result = accountTypeArrays.includes(req.accountType)
         if (!result) return res.sendStatus(401); //Unauthorized
         next()

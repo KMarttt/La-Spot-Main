@@ -8,8 +8,6 @@ export function checkExistingEmail(email, ID, user) {
         ? "SELECT email, user_id as account_id FROM user_information WHERE email = ?"
         : "SELECT email, admin_id as account_id FROM admin_information WHERE email = ?"
         
-        
-
         connection.query(sqlQuerySearchUser, [email], (error, data) => {
             if (error) {
                 console.log(error);

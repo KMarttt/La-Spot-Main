@@ -75,7 +75,6 @@ export const handleLogin = async (req, res) => {
                     },
                     process.env.ACCESS_TOKEN_SECRET,
                     { expiresIn: '15m' } 
-                    // { expiresIn: '10s' } 
                 );
                 console.log("refresh token id state: " +  userData[0].ID)
                 const refreshToken = jwt.sign(
@@ -93,10 +92,8 @@ export const handleLogin = async (req, res) => {
                     res.cookie("jwt", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000}); 
                     // set to one day
                     // not available to js
-
                     res.json({ accessToken, ID: userData[0].ID, accountType: userData[0].account_type })
                 })
-                
             }).catch (error => {
                 console.log(error.message);
                 return res.status(500).json({"message": "Error during password comparison"})
@@ -120,7 +117,6 @@ const getAdminEmail = (adminCode) => {
 export const forgotPassword = async(req, res) => {
     let { email, accountType } = req.body;
 
-    
     try {
 
         if (accountType === "Admin") {
@@ -137,7 +133,6 @@ export const forgotPassword = async(req, res) => {
         }
 
         const otpCode = Math.floor(10000 + Math.random() * 90000).toString();
-        
         const password_reset_table = accountType === "User" ? "user_password_reset" : "admin_password_reset";
 
         const sql = `

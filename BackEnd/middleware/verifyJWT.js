@@ -29,7 +29,6 @@ export const verifyJWT = (req, res, next) => {
             console.log("Decoded JWT:", decoded);
             req.user = decoded.UserInfo.ID; 
             req.accountType = decoded.UserInfo.accountType
-            //  also include the type of account
             next();
         }
     )
