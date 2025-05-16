@@ -43,7 +43,6 @@ export function UserProfileHistoryTable() {
             header: "Date In",
             filterFn: prefixFilterFn,
             cell: (props) => <p>{props.getValue()}</p>
-    
         },
         {
             accessorKey: "time_in",
@@ -91,7 +90,6 @@ export function UserProfileHistoryTable() {
                 value={date_in}
                 onChange={(e) => onFilterChange("date_in", e.target.value)}
                 placeholder="Search for date in"
-            
             ></input>
             <table className="__table__">
                 <thead>
@@ -154,7 +152,7 @@ export function UserProfileHistoryTable() {
             <p>
                 Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
             </p>
-            <div className="buttonPagination"> { /* you may use this class name to edit the pagination button */ }
+            <div className="buttonPagination"> 
                 <button
                 onClick ={() => table.setPageIndex(0)}
                 disabled = {!table.getCanPreviousPage()}

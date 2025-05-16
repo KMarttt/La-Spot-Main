@@ -21,7 +21,6 @@ export function Lot({lotID, status, vehiclePlate, vehicleType, statusFilter, veh
     }
 
     return(
-
         <>
             <div
                 className="slot"

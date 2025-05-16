@@ -74,11 +74,10 @@ export function AdminParking() {
               </button>
             </div>
           </div>
-
+          
           <div className="parkingTable__container">
             <div className="parkingTable__content">
               <h1 className="parkingTable__title">{selectedZone} Parking</h1>
-
               <div className="adminParking__controls">
                 {/* Filter Buttons */}
                 <div className="adminParking__filterButtons">

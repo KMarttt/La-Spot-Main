@@ -76,7 +76,6 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
       if (namePattern.test(tempProfile.first_name) === false){
           newErrors["first_name"] = true;
           inputRefs.current["first_name"].placeholder = "Invalid first name format";
-          // inputRefs.current["first_name"].classList.add("invalid-input");
           tempProfile["first_name"] = "";
       }
       if (namePattern.test(tempProfile.last_name) === false){
@@ -155,9 +154,6 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
 
   // Will check if there's an error in the put request
   useEffect(() => {
-    // console.log("update profile data:" + updatedProfileData);
-    // console.log("update error: " +updateError[0].message)
-
     if (updateError){
       console.error("Profile update error:", updateError);
       console.log("inputRefs.current:", inputRefs.current);
@@ -172,7 +168,6 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
         tempProfile["email"] = "";
       }
 
-      // 
       if (updateError.errorField==="currentPassword"){
         newErrors["currentPassword"] = true;
         inputRefs.current["currentPassword"].placeholder = updateError.message
@@ -202,7 +197,6 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
 
   // Update temporary profile while editing
   const handleChange = (field, value) => {
-    // setTempProfile({ ...tempProfile, [field]: value });
     setTempProfile(prevTempProfile => ({ // Use the functional update form
     ...prevTempProfile,
     [field]: value,
@@ -296,24 +290,16 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
                 {/* Display profile info */}
                 <h2 className="My-profile-title">My Profile</h2>
                 <div className="profile-header">
-
-
-                  {/* <div className="profile-image-container">
-                    <img src={"./images/userProfile.jpg"} alt="Profile" />
-                  </div> */}
-
                   <div className="profile-image-container-wrapper">
                     <div className="profile-image-container">  
                       <div className="profile-image-wrapper">
-                        {/* <img src={profile.image} alt="Profile" className="profile-image" /> */}
                         <img src={tempProfile?.profilePic ? tempProfile.profilePic : tempProfile.profile_image} 
-                          // /default-avatar.png
                           alt="Profile" 
                           className="profile-image" 
                         />
                       </div>
                     </div>
-                    <label htmlFor="profile-image-input" /*className="change-photo-button" */ className="edit-button">
+                    <label htmlFor="profile-image-input" className="edit-button">
                       Change Photo
                     </label>
                     <input
@@ -324,9 +310,6 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
                       style={{ display: "none" }}
                     />
                   </div>
-                  
-
-
 
                   <div className="profile-info-container">
                     <h2 className="accountFullname">
@@ -334,32 +317,18 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
                     </h2>
                       <p className="accountDisplaytype">{profileData.account_type}</p>
                       <p className="accountDisplayemail">{profileData.email}</p>
-                      
                   </div>
                 </div>
 
 
 
                 <div className="profile-actions">
-                  {/* {editingField && (
-                    <div className="save-cancel-buttons">
-                      <button className="save-button" onClick={handleSave}>
-                        Save
-                      </button>
-                      <button className="cancel-button" onClick={() => setEditingField(null)}>
-                        Cancel
-                      </button>
-                    </div>
-                  )} */}
-
-
                   {tempProfile?.rawProfilePic && (
                     <div className="upload-controls">
-                      <button /* className="upload-button" */ className="save-button"  onClick={handleFileUpload}>
+                      <button className="save-button"  onClick={handleFileUpload}>
                         Save
                       </button>
-                      {/* <button className="cancel-upload-button" onClick={() => setSelectedFile(null)}> */}
-                      <button /* className="cancel-upload-button" */ className="cancel-button" onClick={() => handleCancelProfilePic()}>
+                      <button className="cancel-button" onClick={() => handleCancelProfilePic()}>
                         Cancel
                       </button>
                     </div>
@@ -422,14 +391,6 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
                       <strong>Plate Number:</strong> {profileData.vehicle_plate}
                     </p>
                   </div>
-                  {/* <div className="edit-button-container">
-                    <button
-                      onClick={() => handleEditClick("vehicle")}
-                      className="edit-button"
-                    >
-                      Edit <img src={penIcon} alt="Edit" className="pen-icon" />
-                    </button>
-                  </div> */}
                 </div>
                 {/* Logout Button */}
                 <LogoutButton />
@@ -442,27 +403,6 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
 
                   <UserProfileHistoryTable/>
 
-                  {/* Loop through history array and render each record */}
-                  {/* <table className="__table__">
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Time In</th> 
-                        <th>Time Out</th>
-                        <th>Location</th>
-                      </tr>
-                    </thead>
-                    <tbody>                     
-                      {parkingHistory.map((entry, index) => (
-                        <tr key={index}>
-                          <td>{entry.date}</td>
-                          <td>{entry.timeIn}</td>
-                          <td>{entry.timeOut}</td>
-                          <td>{entry.location}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table> */}
                 </div>
               </div>
             )}
@@ -515,16 +455,6 @@ export function UserProfile({ triggerRefreshPage, refreshPage }) {
                       onChange={(e) => handleChange("email", e.target.value)}
                     />
                   </label>
-                  {/* <label>
-                    Student Number:
-                    <input
-                      type="text"
-                      value={tempProfile.user_id}
-                      onChange={(e) =>
-                        handleChange("studentNumber", e.target.value)
-                      }
-                    />
-                  </label> */}
                 </>
               )}
 

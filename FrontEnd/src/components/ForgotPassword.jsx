@@ -38,6 +38,7 @@ const ForgotPassword = ({ goBackToLogin }) => {
 
     // Will display "sending email..."
     setIsPending(true);
+
     try {
       console.log("triggering email validation");
       console.log("forgot password account type", accountType)
@@ -72,15 +73,10 @@ const ForgotPassword = ({ goBackToLogin }) => {
     } catch (err) {
       console.log(err)
     }
-    
-    
-    
   }
-
 
   const handleVerifyCode = async () => {
     const enteredCode = code.join("");
-
     let newErrors = {};
 
     if (enteredCode.length !== 5) {
@@ -120,7 +116,6 @@ const ForgotPassword = ({ goBackToLogin }) => {
   }
 
   const handlePasswordSubmit = async () => {
-
     let newErrors = {};
 
     if (newPassword !== confirmPassword) {
@@ -205,7 +200,6 @@ const ForgotPassword = ({ goBackToLogin }) => {
                 type="text"
                 maxLength="1"
                 value={digit}
-                // ref={(el) => (inputRefs.current)["code"] = el}
                 className={errors["code"] ? "invalid-input" : ""}
                 onChange={(e) => handleCodeChange(e.target.value, i)}
               />

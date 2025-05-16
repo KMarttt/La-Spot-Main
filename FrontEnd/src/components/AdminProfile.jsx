@@ -6,7 +6,6 @@ import { usePutFetch } from "../customHooks/usePutFetch"
 import { usePostFetch } from "../customHooks/usePostFetch";
 import "../css/AdminProfile.css";
 import { LogoutButton } from "./Logoutbutton";
-import React from "react";
 
 
 export function AdminProfile({triggerRefreshPage, refreshPage}) {
@@ -16,7 +15,8 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
   const {auth, setAuth} = useAuth();
   const inputRefs = useRef({})
   const [refreshKey, setRefreshKey] = useState(0);
-// refreshPage
+
+  // refreshPage
   useEffect(() => {
     triggerGet(`http://localhost:8080/admin-profile/${auth.ID}`)
   }, [refreshKey, refreshPage, auth.ID])
@@ -103,7 +103,6 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
         })
       }
     }
-    // setEditingField(null);
   };
 
   useEffect(() => {
@@ -121,9 +120,6 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
   }, [putProfileData])
 
   useEffect(() => {
-    // console.log("update profile data:" + updatedProfileData);
-    // console.log("update error: " +updateError[0].message)
-
     if (updateError){
       console.error("Profile update error:", updateError);
       console.log("inputRefs.current:", inputRefs.current);
@@ -165,7 +161,6 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
 
   // Update temporary profile while editing
   const handleChange = (field, value) => {
-    // setTempProfile({ ...tempProfile, [field]: value });
     setTempProfile(prevTempProfile => ({ // Use the functional update form
       ...prevTempProfile,
       [field]: value,
@@ -242,16 +237,10 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
                 <h2 className="My-profile-title">My Profile</h2>
                 <div className="profile-header">
 
-                  {/* <div className="profile-image-container">
-                    <img src={"./images/userProfile.jpg"} alt="Profile" />
-                  </div> */}
-
                   <div className="profile-image-container-wrapper">
                     <div className="profile-image-container">  
                       <div className="profile-image-wrapper">
-                        {/* <img src={profile.image} alt="Profile" className="profile-image" /> */}
                         <img src={tempProfile?.profilePic ? tempProfile.profilePic : tempProfile.profile_image} 
-                          // /default-avatar.png
                           alt="Profile" 
                           className="profile-image" 
                         />
@@ -259,7 +248,7 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
                     </div>
 
 
-                    <label htmlFor="profile-image-input" /*className="change-photo-button" */ className="edit-button">
+                    <label htmlFor="profile-image-input" className="edit-button">
                       Change Photo
                     </label>
                     <input
@@ -282,25 +271,12 @@ export function AdminProfile({triggerRefreshPage, refreshPage}) {
 
 
                 <div className="profile-actions">
-                  {/* {editingField && (
-                    <div className="save-cancel-buttons">
-                      <button className="save-button" onClick={handleSave}>
-                        Save
-                      </button>
-                      <button className="cancel-button" onClick={() => setEditingField(null)}>
-                        Cancel
-                      </button>
-                    </div>
-                  )} */}
-
-
                   {tempProfile?.rawProfilePic && (
                     <div className="upload-controls">
                       <button /* className="upload-button" */ className="save-button"  onClick={handleFileUpload}>
                         Save
                       </button>
-                      {/* <button className="cancel-upload-button" onClick={() => setSelectedFile(null)}> */}
-                      <button /* className="cancel-upload-button" */ className="cancel-button" onClick={() => handleCancelProfilePic()}>
+                      <button className="cancel-button" onClick={() => handleCancelProfilePic()}>
                         Cancel
                       </button>
                     </div>

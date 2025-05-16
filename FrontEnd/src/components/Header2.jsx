@@ -59,16 +59,6 @@ export function Header2(refreshPage) {
                   Parking
                 </Link>
               </li>
-
-              {/* <li className="nav__item">
-                <a
-                  href="#parking"
-                  className="nav__link"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  History
-                </a>
-              </li> */}
             </ul>
 
             {/* PROFILE IMAGE */}

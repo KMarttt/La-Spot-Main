@@ -186,7 +186,6 @@ export function AdminHistory() {
                 <h1 className="accountsTable__title">
                   {`${accountType} History`}
                 </h1>
-
                 <AdminTableFilter
                   columnFilters={columnFilters}
                   setColumnFilters={setColumnFilters}
@@ -255,7 +254,6 @@ export function AdminHistory() {
                 </p>
                 <div className="buttonPagination">
                   {" "}
-                  {/* you may use this class name to edit the pagination button */}
                   <button
                     onClick={() => table.setPageIndex(0)}
                     disabled={!table.getCanPreviousPage()}

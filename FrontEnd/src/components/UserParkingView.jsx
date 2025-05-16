@@ -13,10 +13,12 @@ export function UserParkingView() {
     const {data: assignedLot, isPending: searching, error : searchError, triggerGet: getAssignedLot} = useGetFetch();
     const { auth, setAuth } = useAuth();
     
+    // Will load in the parking zones info
     useEffect(() => {
         getZones("http://localhost:8080/parkingZones")
     }, [])
 
+    // Will GET assigned parking lot for the user (if there is one)
     useEffect(() => {
       getAssignedLot(`http://localhost:8080/assignedLot/${auth.ID}`)
     }, [])
@@ -52,8 +54,6 @@ export function UserParkingView() {
                   </Link>
               )
               })}
-
-
 
           </div>
         </div>
