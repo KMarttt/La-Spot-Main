@@ -1,38 +1,22 @@
 # La-Spot-Main
 
-LaSpot React Framework
+Download node & sql
 
-NOTES:
+Create the SQL database using the TableCreation2.sql
 
-## COMPONENTS HANDLING <br />
+Then create the .env file in the BackEnd based on the env-example (or the one I sent in the DC )
 
-- All components are in the Components Folder <br />
-- All should reference/import .css files from the css folder
-  <br /><br />
+Create two terminals (for BackEnd and FrontEnd)
 
-## GLOBAL VARIABLES (Root Variables for CSS)<br />
+On the first terminal:
 
-- All root variables are placed inside the index.css<br />
-- Style Content: font, font color, font weight, z-index, base, CSS class, scrollbar, table design
-  <br /><br />
+- cd BackEnd
+- npm install
+- npm start
 
-## PURPOSE OF APP.JSX<br />
+On the second terminal:
 
-- This is where we import everything so that they get exported to the main.jsx
-  <br /><br />
-
-## PURPOSE OF MAIN.JSX<br />
-
-- Do not touch. In Strict Mode.
-  <br /><br />
-
-## Storing Images and Assets:<br />
-
-- Store them on Public > 'images' folder for global accessibilities.
-  <br /><br />
-
-## RUN CODE:<br />
-
-- cd LaSpot_Website <br />
-- npm install (if it's a new git clone)<br />
+- cd frontEnd
+- npm install
 - npm run dev
+- Then follow the link
