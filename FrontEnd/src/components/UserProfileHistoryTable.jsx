@@ -2,7 +2,10 @@ import "../css/UserProfile.css";
 import { useGetFetch } from "../customHooks/useGetFetch";
 import { useState, useEffect } from "react";
 import { useReactTable, getCoreRowModel, flexRender, getFilteredRowModel, getPaginationRowModel, getSortedRowModel } from "@tanstack/react-table"
+// Icons that were used:
 import { BiSort } from "react-icons/bi";
+import { IoMdArrowDropup } from "react-icons/io";
+import { IoMdArrowDropdown } from "react-icons/io";
 import { useAuth } from "../customHooks/AuthContext";
 
 export function UserProfileHistoryTable() {
@@ -92,29 +95,45 @@ export function UserProfileHistoryTable() {
             ></input>
             <table className="__table__">
                 <thead>
-                {table.getHeaderGroups().map(headerGroup => <tr key={headerGroup.id}>
-                    {headerGroup.headers.map(
-                    // now we can use the header array to render 
-                    header => <th key = {header.id}>
-                        {header.column.columnDef.header}
-                        {
-                            header.column.getCanSort() && 
-                            <BiSort // this is an icon -- you can change this is you want 
-                                size = {20}
-                                onClick={
-                                    header.column.getToggleSortingHandler()
-                                }
-                            />
-                        }
-                        {
-                            {
-                                asc: " 🔼", // you may use icon here or change it if you want
-                                desc: " 🔽"
-                            }[header.column.getIsSorted()]  
-                        }
-                    </th>
-                    )}
-                </tr>)}
+                {table.getHeaderGroups().map((headerGroup) => (
+                    <tr key={headerGroup.id}>
+                        {headerGroup.headers.map(
+                            // now we can use the header array to render
+                            (header) => (
+                                <th key={header.id}>
+                                    {header.column.columnDef.header}
+                                    {header.column.getCanSort() && (
+                                        <BiSort
+                                            size={20}
+                                            onClick={header.column.getToggleSortingHandler()}
+                                            style={{
+                                                color: "rgb(44, 102, 110)",
+                                                marginLeft: "5px",
+                                                cursor: "pointer",
+                                            }}
+                                        />
+                                    )}
+                                    {
+                                        {
+                                            asc: (
+                                            <span className="sort-indicator asc">
+                                                {" "}
+                                                <IoMdArrowDropup size={25} />
+                                            </span>
+                                            ),
+                                            desc: (
+                                            <span className="sort-indicator desc">
+                                                {" "}
+                                                <IoMdArrowDropdown size={25} />
+                                            </span>
+                                            ),
+                                        }[header.column.getIsSorted()]
+                                    }
+                                </th>
+                            )
+                        )}
+                    </tr>
+                ))}
                 </thead>
                 <tbody>
                     {

@@ -21,7 +21,9 @@ export function AdminHistory() {
     parking_id: false,
   });
   const { data: HistoryData, isPending, error, triggerGet } = useGetFetch();
-  const [columnFilters, setColumnFilters] = useState([]);
+  const [columnFilters, setColumnFilters] = useState([
+    { id: "account_type", value: ["Student"] }
+  ]);
 
   // Trigger Fetch
   useEffect(() => {
@@ -53,6 +55,16 @@ export function AdminHistory() {
       cell: (props) => <p>{props.getValue()}</p>,
     },
     {
+            accessorKey: "vehicle_type",
+            header: "Vehicle Type",
+            cell: (props) => <p>{props.getValue()}</p>
+    },
+    {
+            accessorKey: "vehicle_plate",
+            header: "Vehicle Plate",
+            cell: (props) => <p>{props.getValue()}</p>
+    },
+    {
       accessorKey: "parking_lot",
       header: "Parking Lot",
       cell: (props) => <p>{props.getValue()}</p>,
@@ -78,7 +90,9 @@ export function AdminHistory() {
     {
       accessorKey: "duration",
       header: "Duration",
-      cell: (props) => <p>{props.getValue()}</p>,
+      cell: (props) => <p>
+        {(props.getValue()/60).toFixed(2)} {(props.getValue()/60) < 1 ? "Hour" : "Hours"} 
+        </p>,
     },
   ];
 

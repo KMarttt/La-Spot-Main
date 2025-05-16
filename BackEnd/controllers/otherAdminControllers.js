@@ -20,7 +20,7 @@ export const accountRecord = (req, res) => {
 }
 
 export const adminParkingHistory = (req, res) => {
-    const queryAccountHistory = `SELECT parking.user_id, user_information.account_type, CONCAT(zone, " ", lot_id) AS parking_lot, vehicle.vehicle_type, parking.occupied_at, parking.vacated_at, parking.duration 
+    const queryAccountHistory = `SELECT parking.user_id, user_information.account_type, CONCAT(zone, " ", lot_id) AS parking_lot, vehicle.vehicle_type, vehicle.vehicle_plate, parking.occupied_at, parking.vacated_at, parking.duration 
     FROM parking 
     LEFT JOIN user_information ON user_information.user_id = parking.user_id 
     LEFT JOIN vehicle ON vehicle.user_id = user_information.user_id
