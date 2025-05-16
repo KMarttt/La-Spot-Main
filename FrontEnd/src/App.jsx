@@ -18,14 +18,6 @@ import { UserParkingView } from "./pages/UserParkingView";
 import { UserParking } from "./pages/UserParking";
 import { UserProfile } from "./pages/UserProfile";
 
-
-
-// import { AdminPage } from "./pages/AdminPage";
-// import { UserPage } from "./pages/UserPage";
-// import { WorkerPage } from "./pages/WorkerPage";
-
-// Log out doesn't work for admin
-
 function App() {
   const { auth, setAuth } = useAuth(); 
   const isLoggedin = Boolean(auth?.accessToken);
