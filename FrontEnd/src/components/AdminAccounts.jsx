@@ -18,9 +18,6 @@ import { IoMdArrowDropdown } from "react-icons/io";
 
 export function AdminAccounts() {
   const [accountType, setAccountType] = useState("Student");
-  const [columnVisibility, setColumnVisibility] = useState({
-    account_type: false,
-  });
   const {
     data: accountRecordData,
     isPending,
@@ -81,7 +78,6 @@ export function AdminAccounts() {
     columns,
     state: {
       columnFilters,
-      columnVisibility,
     },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -145,7 +141,7 @@ export function AdminAccounts() {
                 className={`accountsButton ${
                   accountType === "students" ? "active" : ""
                 }`}
-                onClick={() => setAccountType("Student")}
+                onClick={() => handleSelectAccountType("Student")}
               >
                 Students
               </button>
@@ -153,7 +149,7 @@ export function AdminAccounts() {
                 className={`accountsButton ${
                   accountType === "workers" ? "active" : ""
                 }`}
-                onClick={() => setAccountType("Worker")}
+                onClick={() => handleSelectAccountType("Worker")}
               >
                 Workers
               </button>
