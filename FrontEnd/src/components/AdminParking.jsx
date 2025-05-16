@@ -4,7 +4,7 @@ import { TableBodyParkingAdmin } from "./TableBodyParkingAdmin.jsx";
 import { useState, useEffect } from "react";
 
 export function AdminParking() {
-  const [selectedZone, setSelectedZone] = useState("ADG");
+  const [selectedZone, setSelectedZone] = useState("ICTC");
   const [show, setShow] = useState("showAll");
   const [refreshKey, setRefreshKey] = useState(0);
   const { data: lots, isPending, error, triggerGet } = useGetFetch();
